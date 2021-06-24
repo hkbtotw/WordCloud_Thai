@@ -121,7 +121,7 @@ plt.show()
 
 
 #############################################################
-### Ranking most frequently appeared words
+### Ranking most frequently appearing words
 RankedWord=rank(output)
 #print(' Rank : ',RankedWord,' == ',type(RankedWord))
 c=dict(RankedWord)
@@ -131,7 +131,7 @@ c=dict(RankedWord)
 SortedWord = sorted(c, key=lambda x: c[x], reverse=True)
 Dummy1=" - ".join(SortedWord[1:15])
 
-print( " Top 15 words most frequently appeared in the textinput -- ", Dummy1)
+print( " Top 15 words most frequently appearing words in the textinput -- ", Dummy1)
 
 
 
