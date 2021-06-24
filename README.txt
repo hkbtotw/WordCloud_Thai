@@ -12,4 +12,4 @@ How:
    python NLP_WordCloud_v5.1_Local.py
 
 DEMO:
-<img src=https://github.com/hkbtotw/WordCloud_Thai/blob/master/demo_figure.jpg alt="wordcloud_demo" width="1000"/>
+<img src=https://github.com/hkbtotw/WordCloud_Thai/blob/master/demo_figure.JPG alt="wordcloud_demo" width="1000"/>
