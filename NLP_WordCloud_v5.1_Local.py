@@ -39,7 +39,7 @@ dfList=df2_Transaction['OtherReason'].values.tolist()
 ####### CUTTING
 #######  Looping through rows of textinput columns to cut words and remove stopwords
 Outcome=[]
-for r in dfList[:10]:
+for r in dfList:
     Dummy=[]
     tokens=[]
     tokens=list(eng_tokens(r))
