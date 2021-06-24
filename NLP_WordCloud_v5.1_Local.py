@@ -10,6 +10,9 @@ from collections import Counter
 import operator
 from pythainlp.corpus.common import thai_words
 from pythainlp import Tokenizer
+import deepcut
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
 
 
 def reemovNestings(l): 
@@ -49,12 +52,19 @@ for r in dfList:
         
     #print(' Dummy : ', Dummy)
     #Dummy=list(thai_tokens(lowered, keep_whitespace=False, engine='newmm'))
-    words = set(thai_words())  # thai_words() returns frozenset
-    words.add("พาเลท")
-    words.add("ผสานพลัง")
-    words.add("ทีมงาน")
-    custom_tokenizer = Tokenizer(words)
-    Dummy=list(custom_tokenizer.word_tokenize(lowered))
+
+    ## Option1:  Custom cut
+    # words = set(thai_words())  # thai_words() returns frozenset
+    # words.add("พาเลท")
+    # words.add("ผสานพลัง")
+    # words.add("ทีมงาน")
+    # custom_tokenizer = Tokenizer(words)
+    # Dummy=list(custom_tokenizer.word_tokenize(lowered))
+
+    ###  Option2: Custom Deepcut Tokenize
+    Dummy=deepcut.tokenize(lowered,custom_dict=[u'ผสานพลัง',u'ถังไม้โอ๊ค',u'โรงงาน',u'วังน้อย',u'โอกาส',u'สิบทิศ',u'สนับสนุน'])
+
+
     #print(' Dummy 2 : ',Dummy)
     Outcome.append(Dummy)
 
@@ -87,6 +97,28 @@ reemovNestings(NoStop)
 print(' Output no stopwords : ',output, ' : ', len(output))
 dfOutput=pd.DataFrame(output, columns=['output'])
 dfOutput.to_csv(file_path+'output_for_wordcloud.csv')
+
+
+
+############# Wordcloud image generation 
+## ref: https://python3.wannaphong.com/2017/06/word-cloud-python.html
+## ref: https://www.f0nt.com/release/th-sarabun-new/  (Thai font)
+text=" ".join(output)
+# Create and generate a word cloud image:
+wordcloud = WordCloud(font_path='C:\\Users\\70018928\\Documents\\Project2021\\Experiment\\NLP\\wordcutter\\thai_font\\THSarabunNew.ttf',
+                width = 800, height = 800,
+                background_color ='white',
+                regexp=r"[\u0E00-\u0E7Fa-zA-Z']+",
+                min_font_size = 10).generate(text)
+# Display the generated image:
+  
+plt.figure(figsize = (8, 8), facecolor = None)
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off")
+plt.tight_layout(pad = 0)
+plt.show()
+
+
 
 #############################################################
 ### Ranking most frequently appeared words
