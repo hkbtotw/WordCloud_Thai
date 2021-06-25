@@ -1,10 +1,10 @@
 import pandas as pd
 from pythainlp import word_tokenize as thai_tokens
-from nltk import word_tokenize as eng_tokens
 from pythainlp.corpus import thai_stopwords as thaisw
 from pythainlp.util import rank
 import nltk
 from nltk.corpus import stopwords as engsw
+from nltk import word_tokenize as eng_tokens
 import datetime
 from collections import Counter
 import operator
@@ -13,6 +13,7 @@ from pythainlp import Tokenizer
 import deepcut
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
+#from thai_sentiment import get_sentiment
 
 
 def reemovNestings(l): 
@@ -63,6 +64,7 @@ for r in dfList:
 
     ###  Option2: Custom Deepcut Tokenize
     Dummy=deepcut.tokenize(lowered,custom_dict=[u'ผสานพลัง',u'ถังไม้โอ๊ค',u'โรงงาน',u'วังน้อย',u'โอกาส',u'สิบทิศ',u'สนับสนุน'])
+    
 
 
     #print(' Dummy 2 : ',Dummy)
@@ -80,7 +82,7 @@ EngWord=list(set(engsw.words('english')))
 
 #### Manually input customized stopwords
 Morewords=['การ','การทำงาน','ทำงาน','เสมอ','krub','Test', 'nan', ' ','test','.',',','ดัน','ทำ','มือ','ลัก','พ','งาน','ดี','กา','/','\u200b',')','(']
-All_Stop_Word=ThaiWord+EngWord+Morewords
+All_Stop_Word=ThaiWord+Morewords+EngWord
 
 #### Remove all stopwords
 NoStop=[]
@@ -104,6 +106,7 @@ dfOutput.to_csv(file_path+'output_for_wordcloud.csv')
 ## ref: https://python3.wannaphong.com/2017/06/word-cloud-python.html
 ## ref: https://www.f0nt.com/release/th-sarabun-new/  (Thai font)
 text=" ".join(output)
+print(' ===> ',text)
 # Create and generate a word cloud image:
 wordcloud = WordCloud(font_path='C:\\Users\\70018928\\Documents\\Project2021\\Experiment\\NLP\\wordcutter\\thai_font\\THSarabunNew.ttf',
                 width = 800, height = 800,
@@ -135,3 +138,12 @@ print( " Top 15 words most frequently appearing words in the textinput -- ", Dum
 
 
 
+##################################################
+
+# def GetSentimentDf(x):
+#     return get_sentiment(x)
+
+# df2_Transaction['sentiment']=df2_Transaction.apply(lambda x:GetSentimentDf(x['OtherReason']),axis=1)
+
+# print(' sentiment : ',df2_Transaction.head(10))
+# df2_Transaction.to_excel(file_path+'sentiment.xlsx')
